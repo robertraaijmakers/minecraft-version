@@ -24,13 +24,17 @@ jobs:
       - name: Run version fetch script
         run: python fetch_bedrock_version.py
 
-      - name: Push version files with PAT
-        env:
-          TOKEN: ${{ secrets.GH_PAT }}
+      - name: Set up SSH and Git config
         run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
+
+      - name: Push version files using SSH
+        run: |
           git add bedrock_server_version_*.txt
           git commit -m "Update Bedrock server versions" || echo "No changes to commit"
-          git push
+          git push origin HEAD:${{ github.ref }}
