@@ -27,14 +27,14 @@ if th:
 # Write to files and print results
 if release_ver:
     with open("bedrock_server_version_release.txt", "w") as f:
-        f.write(release_ver + "\n")
+        f.write(release_ver)
     print(f"Release Version: {release_ver}")
 else:
     print("Release version not found.")
 
 if preview_ver:
     with open("bedrock_server_version_preview.txt", "w") as f:
-        f.write(preview_ver + "\n")
+        f.write(preview_ver)
     print(f"Preview Version: {preview_ver}")
 else:
     print("Preview version not found.")
