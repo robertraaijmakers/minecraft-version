@@ -31,11 +31,11 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.email "git@github.com"
           git remote set-url origin git@github.com:robertraaijmakers/minecraft-version.git
 
       - name: Test SSH connection
-        run: ssh -T git@github.com || true
+        run: ssh -vT git@github.com
 
       - name: Push version files using SSH
         run: |
